@@ -1,5 +1,7 @@
 # rails3-jquery-autocomplete
 
+[![Build Status](https://secure.travis-ci.org/crowdint/rails3-jquery-autocomplete.png)](http://travis-ci.org/crowdint/rails3-jquery-autocomplete)
+
 An easy way to use jQuery's autocomplete with Rails 3.
 
 Supports both ActiveRecord, [mongoid](http://github.com/mongoid/mongoid), and [MongoMapper](https://github.com/jnunemaker/mongomapper).
@@ -50,15 +52,7 @@ And include autocomplete-rails.js on your layouts
 
     javascript_include_tag "autocomplete-rails.js"
 
-### Rails 3.1.x
-
-Just add it to your app/assets/javascripts/application.js file
-
-    //= require jquery
-    //= require jquery_ujs
-    //= require autocomplete-rails
-
-## Upgrading from older versions
+#### Upgrading from older versions
 
 If you are upgrading from a previous version, run the generator after installing to replace the javascript file.
 
@@ -66,12 +60,21 @@ If you are upgrading from a previous version, run the generator after installing
 
 I'd recommend you do this every time you update to make sure you have the latest JS file.
 
-## Uncompressed Javascript file
+#### Uncompressed Javascript file
 
 If you want to make changes to the JS file, you can install the
 uncompressed version by running:
 
     rails generate autocomplete:uncompressed
+
+### Rails 3.1.x
+
+Just add it to your app/assets/javascripts/application.js file
+
+    //= require jquery
+    //= require jquery_ujs
+    //= require jquery-ui
+    //= require autocomplete-rails
 
 ## Usage
 
@@ -223,8 +226,8 @@ The previous example would fetch the extra attribute slogan and update jQuery('#
 A javascript event named *railsAutocomplete.select* is fired on the input field when a value is selected from the autocomplete drop down. If you need to do something more complex than update fields with data, you can hook into this event, like so:
 
     $('#my_autocomplete_field').bind('railsAutocomplete.select', function(event, data){
-    	/* Do something here */
-    	alert(data.item.id);
+      /* Do something here */
+      alert(data.item.id);
     });
 
 ## Formtastic
@@ -315,9 +318,17 @@ And then, install all your dependencies:
 
 ## Running the test suite
 
-You need to have an instance of MongoDB running on your computer or all the mongo tests will fail miserably.
+<strike>You need to have an instance of MongoDB running on your computer or all the mongo tests will fail miserably.</strike>
+
+To run all the tests once, simply use
 
     rake test
+
+while you're developing, it is recommended that you run
+
+    bundle exec guard
+
+to have the relevent test run every time you save a file.
 
 ## Integration tests
 
@@ -332,6 +343,17 @@ integration folder:
     cd integration
     rake db:migrate
     cucumber
+
+## Where to test what
+
+If you're making or tweaking a plugin (such as the formastic plugin or
+simple\_form plugin), check out the simple\_form\_plugin\_test for an
+example of how to test it as part of the main `rake test` run.
+Historically, plugins like these had been tested (shoddily) as part of
+the integration tests. Feel free to remove them from the integration
+suite and move them into the main suite. Your tests will run much
+faster, and there will be less likelihood of your feature breaking in
+the future. Thanks!
 
 # Thanks to
 
